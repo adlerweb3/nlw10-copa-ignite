@@ -1,16 +1,36 @@
-import Fastify from 'fastify';
+import Fastify from "fastify";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient({
+  log: ["query"], //shows all queries in console
+});
 
 async function bootstrap() {
-    const fastify = Fastify({
-        logger: true, //console observability helper
-    })
+  const fastify = Fastify({
+    logger: true, //console observability helper
+  });
 
-    //First route | pools count: "http://localhost:3333/pools/count"
-    fastify.get('/pools/count', () => {
-        return { count: 8888 }
-    })
+  //pools count route: "http://localhost:3333/pools/count"
+  fastify.get("/pools/count", async () => {
+    const countAllPools = await prisma.pool.count();
 
-    await fastify.listen({ port: 3333 })
+    return { countAllPools };
+  });
+
+  //   //First route | pools count: "http://localhost:3333/pools/count"
+  //   fastify.get("/pools/count", async () => {
+  //     const pools = await prisma.pool.findMany({
+  //       where: {
+  //         code: {
+  //           startsWith: "z",
+  //         },
+  //       },
+  //     });
+
+  //     return { pools };
+  //   });
+
+  await fastify.listen({ port: 3333 });
 }
 
-bootstrap()
+bootstrap();
