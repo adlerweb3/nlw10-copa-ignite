@@ -5,14 +5,20 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+  output = "../ERD.svg"
+  theme = "dark"
+}
+
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
 model Pool {
-  id         String    @id @default(cuid())
-  title     String
-  code      String    @unique
-  createAt  DateTime  @default(now())
+  id          String    @id @default(cuid())
+  title       String
+  code        String    @unique
+  createAt    DateTime  @default(now())
 } 
