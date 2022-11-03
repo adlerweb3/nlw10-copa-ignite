@@ -29,21 +29,8 @@ async function bootstrap() {
     return { countAllPools };
   });
 
-  //   //First route | pools count: "http://localhost:3333/pools/count"
-  //   fastify.get("/pools/count", async () => {
-  //     const pools = await prisma.pool.findMany({
-  //       where: {
-  //         code: {
-  //           startsWith: "z",
-  //         },
-  //       },
-  //     });
-
-  //     return { pools };
-  //   });
-
   // Add to listen [host: '0.0.0.0'] for mobile tests
-  await fastify.listen({ port: 3333, host: "0.0.0.0" });
+  await fastify.listen({ port: 3333 /* host: "0.0.0.0" */ });
 }
 
 bootstrap();
